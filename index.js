@@ -1,24 +1,27 @@
 // declare variables
 const fs = require('fs');
 const readline = require('readline');
-let allAnagrams = {};
+let anagramsList = {};
 
 function Anagram(anagrams) {
-    allAnagrams = anagrams;
+    anagramsList = anagrams;
 }
 
 // prepare data for search, sort input alphabetically
-const sortLetters = Anagram.prototype.sortLetters = word => {
-    return word.split("").sort().join("");
+const sortChars = Anagram.prototype.sortChars = word => {
+    return word.split('')
+        .sort()
+        .join('');
 };
 
 // handle search
-const findAllAnagrams = Anagram.prototype.findAllAnagrams = word => {
-    let sort = sortLetters(word.toLowerCase());
-    if (allAnagrams[sort]) {
-        return allAnagrams[sort];
-    } else {
-        return "There is no anagram";
+const findAnagrams = Anagram.prototype.findAnagrams = word => {
+    let sort = sortChars(word.toLowerCase());
+    if (anagramsList[sort]) {
+        return anagramsList[sort];
+    }
+    else {
+        return 'There is no anagram';
     }
 };
 
@@ -27,7 +30,7 @@ const findAllAnagrams = Anagram.prototype.findAllAnagrams = word => {
 const readFile = Anagram.prototype.readFile = function() {
     fs.readFile('wordlist.txt', 'utf8', (err, contents) => {
         if (err) {
-            console.log("Something went wrong! Detalis: ", err);
+            console.log('Something went wrong! Details: ', err);
             return;
         }
 
@@ -36,14 +39,14 @@ const readFile = Anagram.prototype.readFile = function() {
         words = contents.split('\r\n');
         for (let i in words) {
             let word = words[i].toLowerCase();
-            let sorted = sortLetters(word);
-	    	            
-		if (allAnagrams[sorted] != null) {
-                	allAnagrams[sorted].push(word);
-           	 }
-           	 else {
-                	allAnagrams[sorted] = [word];
-           	 }
+            let sorted = sortChars(word);
+
+            if (anagramsList[sorted] != null) {
+                anagramsList[sorted].push(word);
+            }
+            else {
+                anagramsList[sorted] = [word];
+            }
         }
 
         // handle command line events and prompting
@@ -51,13 +54,14 @@ const readFile = Anagram.prototype.readFile = function() {
         rl.setPrompt('Enter  string or word to find  anagrams: ');
         rl.prompt();
         rl.on('line', (word) => {
-            console.log(findAllAnagrams(word));
+            console.log(findAnagrams(word));
             rl.prompt();
-        }).on('close', () => {
-            console.log("session closed")
-        });
+        })
+            .on('close', () => {
+                console.log('session closed')
+            });
     });
-} 
+}
 
 module.exports = Anagram;
 

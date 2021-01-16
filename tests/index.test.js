@@ -5,43 +5,42 @@ describe("Anagram", () => {
     beforeAll(() => {
         anagram = new Anagram({
             'estt': ['test', 'test', 'test', 'etst', 'ttse'],
-            'aastw': ['astaw'],
-            'addss': ['sdasd'],
-            'adssw': ['sasdw']
+            'ahllo': ['alohl', 'ollah','olhal', 'hallo'],
+            'fhiins': ['insfih', 'finish', 'hinifs'],
         });
     });
 
-    it("should sortLetters() correct sort", () => {
-        const word = anagram.sortLetters('test');
-        expect(word).toBe('estt');
+    it("should sortChars() correct sort", () => {
+        const word = anagram.sortChars('hallo');
+        expect(word).toBe('ahllo');
     });
 
-    it("should not sortLetters() correct sort", () => {
-        const word = anagram.sortLetters('test');
-        expect(word).not.toBe('test');
+    it("should not sortChars() correct sort", () => {
+        const word = anagram.sortChars('hallo');
+        expect(word).not.toBe('hallo');
     });
 
-    it("should correct findAllAnagrams(input)", () => {
-        const result = anagram.findAllAnagrams('test')
-        const resultToBe = ["test", "test", "test", "etst", "ttse"];
+    it("should correct findAnagrams(input)", () => {
+        const result = anagram.findAnagrams('hallo')
+        const resultToBe = ['alohl', 'ollah','olhal', 'hallo'];
         expect(result).toStrictEqual(resultToBe);
     });
 
-    it("should correct findAllAnagrams(input) no anagrams", () => {
-        const result = anagram.findAllAnagrams('k')
+    it("should correct findAnagrams(input) no anagrams", () => {
+        const result = anagram.findAnagrams('g')
         const resultToBe = "There is no anagram";
         expect(result).toStrictEqual(resultToBe);
     });
 
-    it("should correct findAllAnagrams(input) with no string input", () => {
-        const result = anagram.findAllAnagrams('')
+    it("should correct findAnagrams(input) with no string input", () => {
+        const result = anagram.findAnagrams('')
         const resultToBe = "There is no anagram";
         expect(result).toStrictEqual(resultToBe);
     });
 
-    it("should correct findAllAnagrams(input) caseSensitive", () => {
-        const result = anagram.findAllAnagrams('TEST')
-        const resultToBe = ["test", "test", "test", "etst", "ttse"];
+    it("should correct findAnagrams(input) caseInsensitive", () => {
+        const result = anagram.findAnagrams('HALLO')
+        const resultToBe = ['alohl', 'ollah','olhal', 'hallo'];
         expect(result).toStrictEqual(resultToBe);
     });
 });
